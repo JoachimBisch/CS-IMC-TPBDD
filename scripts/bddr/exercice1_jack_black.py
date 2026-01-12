@@ -31,10 +31,10 @@ def get_artist_birth_year(artist_name):
         query = """
         SELECT primaryName, birthYear
         FROM tArtist
-        WHERE primaryName = ?
+        WHERE primaryName = 'Jack Black'
         """
 
-        cursor.execute(query, (artist_name,))
+        cursor.execute(query)
         result = cursor.fetchone()
 
         if result:
