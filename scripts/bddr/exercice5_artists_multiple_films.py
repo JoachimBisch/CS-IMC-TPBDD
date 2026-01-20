@@ -26,11 +26,11 @@ def get_artists_with_multiple_films():
 
         # Requête SQL pour trouver les artistes ayant joué dans plusieurs films
         query = """
-        SELECT a.primaryName, COUNT(DISTINCT p.tconst) AS film_count
+        SELECT a.primaryName, COUNT(DISTINCT j.idFilm) AS film_count
         FROM tArtist a
-        INNER JOIN tPrincipal p ON a.nconst = p.nconst
-        GROUP BY a.nconst, a.primaryName
-        HAVING COUNT(DISTINCT p.tconst) > 1
+        INNER JOIN tJob j ON a.idArtist = j.idArtist
+        GROUP BY a.idArtist, a.primaryName
+        HAVING COUNT(DISTINCT j.idFilm) > 1
         ORDER BY film_count DESC, a.primaryName
         """
 
@@ -87,9 +87,9 @@ def main():
         
         print()
         print(f"📝 Explication de la requête:")
-        print(f"   La requête fait une jointure entre tArtist et tPrincipal")
+        print(f"   La requête fait une jointure entre tArtist et tJob")
         print(f"   pour lier les artistes à leurs films. GROUP BY regroupe")
-        print(f"   par artiste, COUNT(DISTINCT p.tconst) compte le nombre")
+        print(f"   par artiste, COUNT(DISTINCT j.idFilm) compte le nombre")
         print(f"   de films distincts, et HAVING COUNT(...) > 1 filtre pour")
         print(f"   ne garder que les artistes ayant joué dans plus d'un film.")
     else:
